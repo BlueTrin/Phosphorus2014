@@ -8,6 +8,8 @@ namespace PhosphorusForms
 {
     static class Program
     {
+        public static Form1 _form;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,10 +18,9 @@ namespace PhosphorusForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
 
-
-            Application.Run(new Form1());
+            _form = new Form1();
+            Application.Run(_form);
         }
     }
 }
