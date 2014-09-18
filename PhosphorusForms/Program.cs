@@ -9,6 +9,7 @@ namespace PhosphorusForms
     static class Program
     {
         public static Form1 _form;
+        public static bool HasGraph = true;
 
         /// <summary>
         /// The main entry point for the application.
