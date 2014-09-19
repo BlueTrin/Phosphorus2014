@@ -26,38 +26,6 @@ namespace PhosphorusForms
             _bg1.DoWork += DoWorkSolve;
         }
 
-        //public void SetPicture1(Image img)
-        //{
-        //    if (pictureBox1.InvokeRequired)
-        //    {
-        //        pictureBox1.Invoke(new MethodInvoker(
-        //        delegate()
-        //        {
-        //            pictureBox1.Image = img;
-        //        }));
-        //    }
-        //    else
-        //    {
-        //        pictureBox1.Image = img;
-        //    }
-        //}
-
-        //public void SetPicture2(Image img)
-        //{
-        //    if (pictureBox2.InvokeRequired)
-        //    {
-        //        pictureBox1.Invoke(new MethodInvoker(
-        //        delegate()
-        //        {
-        //            pictureBox2.Image = img;
-        //        }));
-        //    }
-        //    else
-        //    {
-        //        pictureBox2.Image = img;
-        //    }
-        //}
-
         public void SetTB1(string txt)
         {
             if (textBox1.InvokeRequired)
@@ -114,7 +82,17 @@ namespace PhosphorusForms
 
         public CodilityArgs GenerateRandomArgsByTree(int nbRooms, int nbPrisonnersLeft)
         {
-            Random rnd = new Random();
+            int seed;
+            Random rnd;
+            if (!int.TryParse(tbSeed.Text, out seed))
+            {
+                MessageBox.Show("Invalid seed" + tbSeed.Text);
+                rnd = new Random();
+            }
+            else
+            {
+                rnd = new Random(seed);
+            }
             //int nbRooms = rnd.Next(1000, 10000); // creates a number between 1 and 12
             int currNodeId = 0;
             TreeNode root = new TreeNode(currNodeId++);
@@ -238,7 +216,16 @@ namespace PhosphorusForms
             Solution sol = new Solution();
             Solution.PrisonRepresentation initial = sol.transformRepresentation(c.A, c.B, c.C);
             Solution.PrisonRepresentation? final;
-            int nbGuards = sol.solution(c.A, c.B, c.C, out final);
+
+            string newfolder = null;
+            if (cbStepbyStep.Checked)
+            {
+                newfolder = DateTime.Now.ToString(" yyyy-MM-dd-HH-mm-ss-fff");
+                if (!Directory.Exists(newfolder))
+                    Directory.CreateDirectory(newfolder);
+            }
+
+            int nbGuards = sol.solution(c.A, c.B, c.C, out final, newfolder);
             Image pic1 = sol.GenerateGraph(initial.hasPrisonner, initial.neighbour, initial.isExit);
             pic1.Save("initial.png");
             Process.Start("initial.png");
@@ -278,9 +265,6 @@ namespace PhosphorusForms
             }
             _bg1.RunWorkerAsync(c);
         }
-
- 
-
 
     }
 }

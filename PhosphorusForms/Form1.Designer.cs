@@ -37,12 +37,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tbLastValuesFileName = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbSeed = new System.Windows.Forms.TextBox();
+            this.cbStepbyStep = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(1149, 6);
+            this.button1.Location = new System.Drawing.Point(772, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(94, 45);
             this.button1.TabIndex = 0;
@@ -52,14 +55,16 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(1143, 456);
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(766, 456);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 3;
             // 
             // tbNbNodes
             // 
-            this.tbNbNodes.Location = new System.Drawing.Point(1149, 71);
+            this.tbNbNodes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbNbNodes.Location = new System.Drawing.Point(772, 71);
             this.tbNbNodes.Name = "tbNbNodes";
             this.tbNbNodes.Size = new System.Drawing.Size(100, 20);
             this.tbNbNodes.TabIndex = 4;
@@ -68,18 +73,19 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(1151, 260);
+            this.button2.Location = new System.Drawing.Point(774, 260);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 45);
             this.button2.TabIndex = 5;
-            this.button2.Text = "Resolve last solution";
+            this.button2.Text = "Replay last solution";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1144, 440);
+            this.label1.Location = new System.Drawing.Point(767, 440);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(105, 13);
             this.label1.TabIndex = 6;
@@ -87,7 +93,8 @@
             // 
             // tbNbPrisonners
             // 
-            this.tbNbPrisonners.Location = new System.Drawing.Point(1151, 144);
+            this.tbNbPrisonners.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbNbPrisonners.Location = new System.Drawing.Point(774, 112);
             this.tbNbPrisonners.Name = "tbNbPrisonners";
             this.tbNbPrisonners.Size = new System.Drawing.Size(100, 20);
             this.tbNbPrisonners.TabIndex = 7;
@@ -95,8 +102,9 @@
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1148, 55);
+            this.label2.Location = new System.Drawing.Point(771, 55);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(51, 13);
             this.label2.TabIndex = 8;
@@ -104,8 +112,9 @@
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1148, 128);
+            this.label3.Location = new System.Drawing.Point(771, 96);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 13);
             this.label3.TabIndex = 9;
@@ -113,17 +122,50 @@
             // 
             // tbLastValuesFileName
             // 
-            this.tbLastValuesFileName.Location = new System.Drawing.Point(1151, 234);
+            this.tbLastValuesFileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbLastValuesFileName.Location = new System.Drawing.Point(774, 234);
             this.tbLastValuesFileName.Name = "tbLastValuesFileName";
             this.tbLastValuesFileName.Size = new System.Drawing.Size(100, 20);
             this.tbLastValuesFileName.TabIndex = 10;
             this.tbLastValuesFileName.Text = "lastvalues.xml";
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(771, 142);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(68, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "random seed";
+            // 
+            // tbSeed
+            // 
+            this.tbSeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbSeed.Location = new System.Drawing.Point(774, 158);
+            this.tbSeed.Name = "tbSeed";
+            this.tbSeed.Size = new System.Drawing.Size(100, 20);
+            this.tbSeed.TabIndex = 11;
+            this.tbSeed.Text = "3";
+            // 
+            // cbStepbyStep
+            // 
+            this.cbStepbyStep.AutoSize = true;
+            this.cbStepbyStep.Location = new System.Drawing.Point(772, 195);
+            this.cbStepbyStep.Name = "cbStepbyStep";
+            this.cbStepbyStep.Size = new System.Drawing.Size(108, 17);
+            this.cbStepbyStep.TabIndex = 13;
+            this.cbStepbyStep.Text = "Save Steps(slow)";
+            this.cbStepbyStep.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1251, 778);
+            this.ClientSize = new System.Drawing.Size(874, 565);
+            this.Controls.Add(this.cbStepbyStep);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.tbSeed);
             this.Controls.Add(this.tbLastValuesFileName);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -151,6 +193,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbLastValuesFileName;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tbSeed;
+        private System.Windows.Forms.CheckBox cbStepbyStep;
     }
 }
 
