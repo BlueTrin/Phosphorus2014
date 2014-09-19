@@ -134,10 +134,8 @@ class Solution
             {
                 isExit[room] = true;
                 nbExits++;
-                Console.WriteLine("add exit" + room.ToString());
             }
         }
-        Console.WriteLine("*** exit number" + nbExits.ToString());
 
         bool hasChanged = true;
         while (hasChanged)
@@ -153,7 +151,6 @@ class Solution
                     {
                         isExit[room] = false;
                         nbExits--;
-                        Console.WriteLine("delete exit" + room.ToString());
                     }
                     continue;
                 }
@@ -168,7 +165,6 @@ class Solution
                         if (isExit[room2])
                         {
                             nbExits--;
-                            Console.WriteLine("delete exit " + room.ToString());
                         }
                         else
                         {
@@ -189,7 +185,6 @@ class Solution
                         {
                             isExit[room] = false;
                             nbExits--;
-                            Console.WriteLine("delete exit" + room.ToString());
                         }
                         
                         neighbour[room].Clear();
@@ -197,7 +192,6 @@ class Solution
                         neighbour[roomRight].Remove(room);
                         neighbour[roomLeft].Add(roomRight);
                         neighbour[roomRight].Add(roomLeft);
-                        Console.WriteLine("link " + roomLeft.ToString() + roomRight.ToString());
                         hasChanged = true;
                     }
                 }
@@ -215,11 +209,9 @@ class Solution
 
                     if (!nonExitNeighbour)
                     {
-                        Console.WriteLine("delete exit surrounded by exits" + room.ToString());
                         foreach (var neighbourRoom in neighbour[room])
                         {
                             neighbour[neighbourRoom].Remove(room);
-                            Console.WriteLine("  --> " + neighbourRoom.ToString());
                         }
                         neighbour[room].Clear();
                         nbExits--;
