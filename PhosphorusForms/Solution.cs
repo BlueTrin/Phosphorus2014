@@ -145,14 +145,7 @@ class Solution
         int stepCount = 0;
         while (hasChanged)
         {
-            if (saveSteps != null)
-            {
-                // save file
-                Image pic = GenerateGraph(hasPrisonner, neighbour, isExit);
-                pic.Save(Path.Combine(saveSteps, "step " + stepCount.ToString() + ".jpg"));
-                using (File.Create(Path.Combine(saveSteps, "step " + stepCount.ToString() + "-" + nbExits))) ;
-                stepCount++;
-            }
+
             hasChanged = false;
             for (int room = 0; room < neighbour.Length; ++room)
             {
@@ -169,7 +162,6 @@ class Solution
                         isExit[room] = false;
                         nbExits--;
                         hasChanged = true;
-                        Debug.Assert(nbExits == isExit.Count(i => i));
                     }
                     continue;
                 }
@@ -199,7 +191,6 @@ class Solution
                         neighbour[room].Clear();
                         neighbour[room2].Remove(room);
                         hasChanged = true;
-                        Debug.Assert(nbExits == isExit.Count(i => i));
                     }
                 }
                 else if (neighbour[room].Count == 2)
@@ -222,35 +213,58 @@ class Solution
                         neighbour[roomLeft].Add(roomRight);
                         neighbour[roomRight].Add(roomLeft);
                         hasChanged = true;
-                        Debug.Assert(nbExits == isExit.Count(i => i));
                     }
                 }
-                else if (isExit[room])
+
+                if (!hasChanged && !isExit[room] && !hasPrisonner[room])
                 {
-                    // if an exit is surrounded by exits
-                    // we can remove it
-                    bool nonExitNeighbour = false;
+                    // if it is a non special nodes surrounded by only special nodes
+                    // of the same type we can remove it
+                    int nbNeighbourExits = 0;
+                    int nbNeighbourPrisonners = 0;
+                    bool allNeighbourExits = true;
+                    //bool hasConnectedExit = false;
                     foreach (var neighbourRoom in neighbour[room])
                     {
-                        if (!isExit[neighbourRoom])
+                        if (isExit[neighbourRoom])
                         {
-                            nonExitNeighbour = true;
-                            break;
+                            nbNeighbourExits++;
+                            //hasConnectedExit |= neighbour[neighbourRoom].Count != 0;
+                        }
+                    }
+                    foreach (var neighbourRoom in neighbour[room])
+                    {
+                        if (hasPrisonner[neighbourRoom])
+                        {
+                            nbNeighbourPrisonners++;
                         }
                     }
 
-                    if (!nonExitNeighbour)
+                    int nbNeighbours = neighbour[room].Count;
+                    if (nbNeighbourExits == nbNeighbours || nbNeighbourPrisonners == nbNeighbours)
                     {
                         foreach (var neighbourRoom in neighbour[room])
                         {
                             neighbour[neighbourRoom].Remove(room);
                         }
                         neighbour[room].Clear();
-                        isExit[room] = false;
-                        nbExits--;
                         hasChanged = true;
-                        Debug.Assert(nbExits == isExit.Count(i => i));
+                    }
 
+                }
+
+                if (isExit[room])
+                {
+                    for (int neighbourIdx = neighbour[room].Count - 1; neighbourIdx >= 0; --neighbourIdx)
+                    {
+                        int neighbourRoom = neighbour[room][neighbourIdx];
+
+                        if (isExit[neighbourRoom])
+                        {
+                            neighbour[room].RemoveAt(neighbourIdx);
+                            neighbour[neighbourRoom].Remove(room);
+                            hasChanged = true;
+                        }
                     }
                 }
             }
@@ -262,9 +276,7 @@ class Solution
             isExit = isExit,
             nbRooms = nbRooms,
             neighbour = neighbour
-
         };
-
         return nbExits;
     }
 }
