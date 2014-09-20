@@ -118,7 +118,6 @@ class Solution
                 continue;
 
             neighbour[B[idx]].Add(A[idx]);
-
             neighbour[A[idx]].Add(B[idx]);
         }
 
@@ -139,8 +138,26 @@ class Solution
             }
         }
 
+
+        // We delete all links between connected exits:
+        for (int room = 0; room < neighbour.Length; ++room)
+        {
+            if (isExit[room])
+            {
+                for (int neighbourIdx = neighbour[room].Count - 1; neighbourIdx >= 0; --neighbourIdx)
+                {
+                    int neighbourRoom = neighbour[room][neighbourIdx];
+
+                    if (isExit[neighbourRoom])
+                    {
+                        neighbour[room].RemoveAt(neighbourIdx);
+                        neighbour[neighbourRoom].Remove(room);
+                    }
+                }
+            }
+        }
+
         bool hasChanged = true;
-        
         // to delete 
         int stepCount = 0;
         while (hasChanged)
@@ -184,6 +201,16 @@ class Solution
                             else
                             {
                                 isExit[room2] = true;
+                                for (var room2Id = neighbour[room2].Count-1 ; room2Id >= 0 ; --room2Id )
+                                {
+                                    var newExitNeighbour = neighbour[room2][room2Id];
+                                    if (isExit[newExitNeighbour])
+                                    {
+                                        //exits must not be connected to each other
+                                        neighbour[room2].RemoveAt(room2Id);
+                                        neighbour[newExitNeighbour].Remove(room2);
+                                    }
+                                }
                             }
                             isExit[room] = false;
                         }
@@ -253,20 +280,7 @@ class Solution
 
                 }
 
-                if (isExit[room])
-                {
-                    for (int neighbourIdx = neighbour[room].Count - 1; neighbourIdx >= 0; --neighbourIdx)
-                    {
-                        int neighbourRoom = neighbour[room][neighbourIdx];
 
-                        if (isExit[neighbourRoom])
-                        {
-                            neighbour[room].RemoveAt(neighbourIdx);
-                            neighbour[neighbourRoom].Remove(room);
-                            hasChanged = true;
-                        }
-                    }
-                }
             }
         }
 
