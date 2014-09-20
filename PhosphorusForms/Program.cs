@@ -8,7 +8,7 @@ namespace PhosphorusForms
 {
     static class Program
     {
-        public static Form1 _form;
+        public static TesterForm _form;
         public static bool HasGraph = true;
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace PhosphorusForms
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            _form = new Form1();
+            _form = new TesterForm();
             Application.Run(_form);
         }
     }

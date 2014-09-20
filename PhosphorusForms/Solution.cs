@@ -104,7 +104,7 @@ class Solution
         if (C.Length == 0)
             return 0;
         int nbRooms = A.Length + 1;
-        bool[] hasPrisonner = new bool[nbRooms];
+        bool[] isPrisonner = new bool[nbRooms];
         bool[] isExit = new bool[nbRooms];
         List<int>[] neighbour = new List<int>[nbRooms];
 
@@ -125,7 +125,7 @@ class Solution
         {
             if (neighbour[C[idx]].Count == 1)
                 return -1;
-            hasPrisonner[C[idx]] = true;
+            isPrisonner[C[idx]] = true;
         }
 
         int nbExits = 0;
@@ -164,10 +164,20 @@ class Solution
         {
 
             hasChanged = false;
+            
+            if (saveSteps != null)
+            {
+                // save file
+                Image pic = GenerateGraph(isPrisonner, neighbour, isExit);
+                pic.Save(Path.Combine(saveSteps, "step " + stepCount.ToString() + ".jpg"));
+                using (File.Create(Path.Combine(saveSteps, "step " + stepCount.ToString() + "-" + nbExits))) ;
+               stepCount++;
+            }
+
             for (int room = 0; room < neighbour.Length; ++room)
             {
                 // we do not move prisoners
-                if (hasPrisonner[room])
+                if (isPrisonner[room])
                 {
                     continue;
                 }
@@ -185,7 +195,7 @@ class Solution
                 else if (neighbour[room].Count == 1)
                 {
                     int room2 = neighbour[room][0];
-                    if (!hasPrisonner[room2])
+                    if (!isPrisonner[room2])
                     {
                         // if a room has only 1 path
                         // and is not connected to a prisonner
@@ -243,7 +253,7 @@ class Solution
                     }
                 }
 
-                if (!hasChanged && !isExit[room] && !hasPrisonner[room])
+                if (!hasChanged && !isExit[room] && !isPrisonner[room])
                 {
                     // if it is a non special nodes surrounded by only special nodes
                     // of the same type we can remove it
@@ -261,7 +271,7 @@ class Solution
                     }
                     foreach (var neighbourRoom in neighbour[room])
                     {
-                        if (hasPrisonner[neighbourRoom])
+                        if (isPrisonner[neighbourRoom])
                         {
                             nbNeighbourPrisonners++;
                         }
@@ -286,7 +296,7 @@ class Solution
 
         representation = new PrisonRepresentation
         {
-            hasPrisonner = hasPrisonner,
+            hasPrisonner = isPrisonner,
             isExit = isExit,
             nbRooms = nbRooms,
             neighbour = neighbour
