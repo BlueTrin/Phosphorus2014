@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -225,18 +226,34 @@ namespace PhosphorusForms
                     Directory.CreateDirectory(newfolder);
             }
 
+            string usedFolder = newfolder ?? "last";
+
+            System.IO.Directory.CreateDirectory(usedFolder);
+
+            System.IO.File.WriteAllLines(Path.Combine(usedFolder, "a.txt"),
+                c.A.Select(a => a.ToString(CultureInfo.InvariantCulture)));
+
+            System.IO.File.WriteAllLines(Path.Combine(usedFolder, "b.txt"),
+                c.B.Select(a => a.ToString(CultureInfo.InvariantCulture)));
+
+            System.IO.File.WriteAllLines(Path.Combine(usedFolder, "c.txt"),
+                c.C.Select(a => a.ToString(CultureInfo.InvariantCulture)));
+
             int nbGuards = sol.solution(c.A, c.B, c.C, out final, newfolder);
+
+            System.IO.File.WriteAllText(Path.Combine(usedFolder, "solution.txt"),
+                nbGuards.ToString(CultureInfo.InvariantCulture));
+            
             Image pic1 = sol.GenerateGraph(initial.hasPrisonner, initial.neighbour, initial.isExit);
-            pic1.Save("initial.png");
-            Process.Start("initial.png");
+
+            pic1.Save(Path.Combine(usedFolder, "initial.png"));
+            Process.Start(Path.Combine(usedFolder, "initial.png"));
             if (final.HasValue)
             {
                 Image pic2 = sol.GenerateGraph(final.Value.hasPrisonner, final.Value.neighbour, final.Value.isExit);
-                //SetPicture2(pic2);
-                pic2.Save("after.png");
-                Process.Start("after.png");
+                pic2.Save(Path.Combine(usedFolder, "after.png"));
+                Process.Start(Path.Combine(usedFolder, "after.png"));
             }
-            //SetPicture1(pic1);
             SetTB1(nbGuards.ToString());
         }
 
